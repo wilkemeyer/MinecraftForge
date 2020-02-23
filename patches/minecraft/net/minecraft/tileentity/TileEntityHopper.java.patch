@@ -30,11 +30,12 @@
      public static ItemStack func_174918_a(IInventory p_174918_0_, IInventory p_174918_1_, ItemStack p_174918_2_, @Nullable EnumFacing p_174918_3_)
      {
          if (p_174918_1_ instanceof ISidedInventory && p_174918_3_ != null)
-@@ -516,9 +525,10 @@
+@@ -516,9 +525,11 @@
          int j = MathHelper.func_76128_c(p_145893_3_);
          int k = MathHelper.func_76128_c(p_145893_5_);
          BlockPos blockpos = new BlockPos(i, j, k);
 -        Block block = p_145893_0_.func_180495_p(blockpos).func_177230_c();
++        if(!p_145893_0_.func_175667_e(blockpos)) return null;
 +        net.minecraft.block.state.IBlockState state = p_145893_0_.func_180495_p(blockpos);
 +        Block block = state.func_177230_c();
  
@@ -43,7 +44,7 @@
          {
              TileEntity tileentity = p_145893_0_.func_175625_s(blockpos);
  
-@@ -611,4 +621,6 @@
+@@ -611,4 +622,6 @@
      {
          return this.field_145900_a;
      }
