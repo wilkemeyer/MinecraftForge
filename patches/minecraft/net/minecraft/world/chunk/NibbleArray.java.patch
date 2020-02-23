@@ -1,0 +1,29 @@
+--- ../src-base/minecraft/net/minecraft/world/chunk/NibbleArray.java
++++ ../src-work/minecraft/net/minecraft/world/chunk/NibbleArray.java
+@@ -37,21 +37,16 @@
+     public int func_177480_a(int p_177480_1_)
+     {
+         int i = this.func_177478_c(p_177480_1_);
+-        return this.func_177479_b(p_177480_1_) ? this.field_76585_a[i] & 15 : this.field_76585_a[i] >> 4 & 15;
++        return this.field_76585_a[i] >> ((p_177480_1_ & 1) << 2) & 15;
+     }
+ 
+     public void func_177482_a(int p_177482_1_, int p_177482_2_)
+     {
+         int i = this.func_177478_c(p_177482_1_);
+-
+-        if (this.func_177479_b(p_177482_1_))
+-        {
+-            this.field_76585_a[i] = (byte)(this.field_76585_a[i] & 240 | p_177482_2_ & 15);
+-        }
+-        else
+-        {
+-            this.field_76585_a[i] = (byte)(this.field_76585_a[i] & 15 | (p_177482_2_ & 15) << 4);
+-        }
++        
++        int shift = (p_177482_1_ & 1) << 2;
++        this.field_76585_a[i] = (byte) (this.field_76585_a[i] & ~(15 << shift) | (p_177482_2_ & 15) << shift);
++        
+     }
+ 
+     private boolean func_177479_b(int p_177479_1_)
