@@ -47,7 +47,12 @@
          final NetworkManager networkmanager = new NetworkManager(EnumPacketDirection.CLIENTBOUND);
          Class <? extends SocketChannel > oclass;
          LazyLoadBase <? extends EventLoopGroup > lazyloadbase;
-@@ -454,6 +460,11 @@
+@@ -450,10 +456,16 @@
+                 {
+                     this.func_150729_e().func_147231_a(new TextComponentTranslation("multiplayer.disconnect.generic", new Object[0]));
+                 }
++                this.field_150745_j.clear();
+             }
          }
      }
  
