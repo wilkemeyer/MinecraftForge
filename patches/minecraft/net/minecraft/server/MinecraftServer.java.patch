@@ -28,7 +28,15 @@
      private Thread field_175590_aa;
      protected long field_175591_ab = func_130071_aq();
      @SideOnly(Side.CLIENT)
-@@ -222,8 +223,6 @@
+@@ -151,6 +152,7 @@
+ 
+     public MinecraftServer(File p_i47054_1_, Proxy p_i47054_2_, DataFixer p_i47054_3_, YggdrasilAuthenticationService p_i47054_4_, MinecraftSessionService p_i47054_5_, GameProfileRepository p_i47054_6_, PlayerProfileCache p_i47054_7_)
+     {
++    	io.netty.util.ResourceLeakDetector.setLevel(io.netty.util.ResourceLeakDetector.Level.DISABLED);
+         this.field_110456_c = p_i47054_2_;
+         this.field_152364_T = p_i47054_4_;
+         this.field_147143_S = p_i47054_5_;
+@@ -222,8 +224,6 @@
      {
          this.func_71237_c(p_71247_1_);
          this.func_71192_d("menu.loadingLevel");
@@ -37,7 +45,7 @@
          ISaveHandler isavehandler = this.field_71310_m.func_75804_a(p_71247_1_, true);
          this.func_175584_a(this.func_71270_I(), isavehandler);
          WorldInfo worldinfo = isavehandler.func_75757_d();
-@@ -254,6 +253,7 @@
+@@ -254,6 +254,7 @@
              worldsettings = new WorldSettings(worldinfo);
          }
  
@@ -45,7 +53,7 @@
          for (int i = 0; i < this.field_71305_c.length; ++i)
          {
              int j = 0;
-@@ -293,8 +293,23 @@
+@@ -293,8 +294,23 @@
                  this.field_71305_c[i].func_72912_H().func_76060_a(this.func_71265_f());
              }
          }
@@ -70,7 +78,7 @@
          this.func_147139_a(this.func_147135_j());
          this.func_71222_d();
      }
-@@ -309,7 +324,7 @@
+@@ -309,7 +325,7 @@
          this.func_71192_d("menu.generatingTerrain");
          int j1 = 0;
          field_147145_h.info("Preparing start region for level 0");
@@ -79,7 +87,7 @@
          BlockPos blockpos = worldserver.func_175694_M();
          long k1 = func_130071_aq();
  
-@@ -434,15 +449,24 @@
+@@ -434,15 +450,24 @@
              {
                  if (worldserver1 != null)
                  {
@@ -104,7 +112,7 @@
      }
  
      public boolean func_71278_l()
-@@ -461,6 +485,7 @@
+@@ -461,6 +486,7 @@
          {
              if (this.func_71197_b())
              {
@@ -112,7 +120,7 @@
                  this.field_175591_ab = func_130071_aq();
                  long i = 0L;
                  this.field_147147_p.func_151315_a(new TextComponentString(this.field_71286_C));
-@@ -505,12 +530,20 @@
+@@ -505,12 +531,20 @@
                      Thread.sleep(Math.max(1L, 50L - i));
                      this.field_71296_Q = true;
                  }
@@ -133,7 +141,7 @@
          catch (Throwable throwable1)
          {
              field_147145_h.error("Encountered an unexpected exception", throwable1);
-@@ -536,13 +569,13 @@
+@@ -536,13 +570,13 @@
                  field_147145_h.error("We were unable to save this crash report to disk.");
              }
  
@@ -148,7 +156,7 @@
                  this.func_71260_j();
              }
              catch (Throwable throwable)
-@@ -551,6 +584,8 @@
+@@ -551,6 +585,8 @@
              }
              finally
              {
@@ -157,7 +165,7 @@
                  this.func_71240_o();
              }
          }
-@@ -577,6 +612,7 @@
+@@ -577,6 +613,7 @@
                  ImageIO.write(bufferedimage, "PNG", new ByteBufOutputStream(bytebuf));
                  ByteBuf bytebuf1 = Base64.encode(bytebuf);
                  p_184107_1_.func_151320_a("data:image/png;base64," + bytebuf1.toString(StandardCharsets.UTF_8));
@@ -165,7 +173,7 @@
              }
              catch (Exception exception)
              {
-@@ -618,6 +654,7 @@
+@@ -618,6 +655,7 @@
      public void func_71217_p()
      {
          long i = System.nanoTime();
@@ -173,7 +181,7 @@
          ++this.field_71315_w;
  
          if (this.field_71295_T)
-@@ -644,6 +681,7 @@
+@@ -644,6 +682,7 @@
  
              Collections.shuffle(Arrays.asList(agameprofile));
              this.field_147147_p.func_151318_b().func_151330_a(agameprofile);
@@ -181,7 +189,7 @@
          }
  
          if (this.field_71315_w % 900 == 0)
-@@ -671,29 +709,31 @@
+@@ -671,29 +710,31 @@
  
          this.field_71304_b.func_76319_b();
          this.field_71304_b.func_76319_b();
@@ -222,7 +230,7 @@
                  this.field_71304_b.func_194340_a(() ->
                  {
                      return worldserver.func_72912_H().func_76065_j();
-@@ -702,11 +742,12 @@
+@@ -702,11 +743,12 @@
                  if (this.field_71315_w % 20 == 0)
                  {
                      this.field_71304_b.func_76320_a("timeSync");
@@ -236,7 +244,7 @@
  
                  try
                  {
-@@ -730,6 +771,7 @@
+@@ -730,6 +772,7 @@
                      throw new ReportedException(crashreport1);
                  }
  
@@ -244,7 +252,7 @@
                  this.field_71304_b.func_76319_b();
                  this.field_71304_b.func_76320_a("tracker");
                  worldserver.func_73039_n().func_72788_a();
-@@ -737,9 +779,11 @@
+@@ -737,9 +780,11 @@
                  this.field_71304_b.func_76319_b();
              }
  
@@ -257,7 +265,7 @@
          this.field_71304_b.func_76318_c("connection");
          this.func_147137_ag().func_151269_c();
          this.field_71304_b.func_76318_c("players");
-@@ -763,7 +807,8 @@
+@@ -763,7 +808,8 @@
  
      public void func_71256_s()
      {
@@ -267,7 +275,7 @@
          this.field_175590_aa.start();
      }
  
-@@ -779,14 +824,13 @@
+@@ -779,14 +825,13 @@
  
      public WorldServer func_71218_a(int p_71218_1_)
      {
@@ -287,7 +295,7 @@
      }
  
      public String func_71249_w()
-@@ -816,7 +860,7 @@
+@@ -816,7 +861,7 @@
  
      public String getServerModName()
      {
@@ -296,7 +304,7 @@
      }
  
      public CrashReport func_71230_b(CrashReport p_71230_1_)
-@@ -1324,11 +1368,8 @@
+@@ -1324,11 +1369,8 @@
          {
              ListenableFutureTask<V> listenablefuturetask = ListenableFutureTask.<V>create(p_175586_1_);
  
@@ -310,7 +318,7 @@
          }
          else
          {
-@@ -1411,6 +1452,16 @@
+@@ -1411,6 +1453,16 @@
      @SideOnly(Side.SERVER)
      public static void main(String[] p_main_0_)
      {
@@ -327,7 +335,7 @@
          Bootstrap.func_151354_b();
  
          try
-@@ -1598,4 +1649,9 @@
+@@ -1598,4 +1650,9 @@
      {
          return this.field_175590_aa;
      }
